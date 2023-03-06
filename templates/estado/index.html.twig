@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estado index{% endblock %}
+
+{% block body %}
+    <h1>Estado index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estado in estados %}
+            <tr>
+                <td>{{ estado.id }}</td>
+                <td>{{ estado.nombre }}</td>
+                <td>
+                    <a href="{{ path('app_estado_show', {'id': estado.id}) }}">show</a>
+                    <a href="{{ path('app_estado_edit', {'id': estado.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_estado_new') }}">Create new</a>
+{% endblock %}
