@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Iva{% endblock %}
+
+{% block body %}
+    <h1>Edit Iva</h1>
+
+    {{ include('iva/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_iva_index') }}">back to list</a>
+
+    {{ include('iva/_delete_form.html.twig') }}
+{% endblock %}

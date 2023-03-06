@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Iva{% endblock %}
+
+{% block body %}
+    <h1>Iva</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ iva.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ iva.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Porcentaje</th>
+                <td>{{ iva.porcentaje }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_iva_index') }}">back to list</a>
+
+    <a href="{{ path('app_iva_edit', {'id': iva.id}) }}">edit</a>
+
+    {{ include('iva/_delete_form.html.twig') }}
+{% endblock %}
