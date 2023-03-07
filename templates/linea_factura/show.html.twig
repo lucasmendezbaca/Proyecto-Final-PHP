@@ -12,8 +12,16 @@
                 <td>{{ linea_factura.id }}</td>
             </tr>
             <tr>
+                <th>Producto</th>
+                <td>{{ linea_factura.producto }}</td>
+            </tr>
+            <tr>
                 <th>Cantidad</th>
                 <td>{{ linea_factura.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>Subtotal</th>
+                <td>{{ total }} €</td>
             </tr>
         </tbody>
     </table>

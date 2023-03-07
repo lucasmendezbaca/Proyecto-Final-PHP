@@ -42,10 +42,11 @@ class LineaFacturaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_linea_factura_show', methods: ['GET'])]
-    public function show(LineaFactura $lineaFactura): Response
+    public function show(LineaFactura $lineaFactura, LineaFacturaRepository $lineaFacturaRepository): Response
     {
         return $this->render('linea_factura/show.html.twig', [
             'linea_factura' => $lineaFactura,
+            'total' => $lineaFacturaRepository->getTotalLineaFactura($lineaFactura),
         ]);
     }
 

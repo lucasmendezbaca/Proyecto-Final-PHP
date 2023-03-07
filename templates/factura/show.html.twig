@@ -37,6 +37,7 @@
                                 <th>Id</th>
                                 <th>Producto</th>
                                 <th>Cantidad</th>
+                                <th>Subtotal</th>
                                 <th>actions</th>
                             </tr>
                         </thead>
@@ -46,6 +47,7 @@
                                     <td>{{ linea.id }}</td>
                                     <td>{{ linea.producto }}</td>
                                     <td>{{ linea.cantidad }}</td>
+                                    <td>{{ linea.getTotal() }} €</td>
                                     <td>
                                         <a href="{{ path('app_linea_factura_show', {'id': linea.id}) }}">show</a>
                                         <a href="{{ path('app_linea_factura_edit', {'id': linea.id}) }}">edit</a>
