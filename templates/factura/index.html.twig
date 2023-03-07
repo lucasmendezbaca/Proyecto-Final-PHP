@@ -9,6 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Cliente</th>
+                <th>Estado</th>
                 <th>Fecha</th>
                 <th>actions</th>
             </tr>
@@ -17,6 +19,8 @@
         {% for factura in facturas %}
             <tr>
                 <td>{{ factura.id }}</td>
+                <td>{{ factura.cliente }}</td>
+                <td>{{ factura.estado }}</td>
                 <td>{{ factura.fecha ? factura.fecha|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('app_factura_show', {'id': factura.id}) }}">show</a>

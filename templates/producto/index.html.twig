@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Precio</th>
+                <th>IVA</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <td>{{ producto.id }}</td>
                 <td>{{ producto.nombre }}</td>
                 <td>{{ producto.precio }}</td>
+                <td>{{ producto.iva }}</td>
                 <td>
                     <a href="{{ path('app_producto_show', {'id': producto.id}) }}">show</a>
                     <a href="{{ path('app_producto_edit', {'id': producto.id}) }}">edit</a>
