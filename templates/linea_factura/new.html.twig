@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LineaFactura{% endblock %}
+
+{% block body %}
+    <h1>Create new LineaFactura</h1>
+
+    {{ include('linea_factura/_form.html.twig') }}
+
+    <a href="{{ path('app_linea_factura_index') }}">back to list</a>
+{% endblock %}
