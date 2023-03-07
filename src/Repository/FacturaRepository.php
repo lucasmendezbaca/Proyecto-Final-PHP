@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Factura;
+use App\Entity\LineaFactura;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,7 +22,7 @@ class FacturaRepository extends ServiceEntityRepository
         parent::__construct($registry, Factura::class);
     }
 
-    public function save(Factura $entity, bool $flush = false): void
+    public function save(Factura $entity, LineaFactura $lineaFactura, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -37,6 +38,21 @@ class FacturaRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getTotalFacturas(): array
+    {
+        $totalFacturas = [];
+        $facturas = $this->findAll();
+        foreach ($facturas as $factura) {
+            $total = 0;
+            foreach ($factura->getLineaFacturas() as $lineaFactura) {
+                $total += $lineaFactura->getTotal();
+            }
+            $totalFacturas[$factura->getId()] = $total;
+        }
+
+        return $totalFacturas;
     }
 
 //    /**

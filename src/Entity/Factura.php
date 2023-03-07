@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\FacturaRepository;
+use App\Entity\LineaFactura;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -28,9 +29,13 @@ class Factura
     #[ORM\OneToMany(mappedBy: 'factura', targetEntity: LineaFactura::class)]
     private Collection $lineaFacturas;
 
+    // private float $total;
+
     public function __construct()
     {
         $this->lineaFacturas = new ArrayCollection();
+        // $this->total = $this->calcularTotal();
+        // $this->total = 0;
     }
 
     public function getId(): ?int
@@ -72,6 +77,21 @@ class Factura
         $this->estado = $estado;
 
         return $this;
+    }
+
+    // public function getTotal(): float
+    // {
+    //     return $this->total;
+    // }
+
+    public function calcularTotal(): float
+    {
+        $total = 0;
+        foreach ($this->lineaFacturas as $lineaFactura) {
+            $total += $lineaFactura->getProducto()->getPrecio() * $lineaFactura->getCantidad();
+        }
+        // $this->total = $total;
+        return $total;
     }
 
     /**

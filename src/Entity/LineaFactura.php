@@ -63,4 +63,9 @@ class LineaFactura
 
         return $this;
     }
+
+    public function getTotal(): float
+    {
+        return $this->cantidad * $this->producto->getPrecio();
+    }
 }

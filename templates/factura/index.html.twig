@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Cliente</th>
                 <th>Estado</th>
+                <th>Total</th>
                 <th>Fecha</th>
                 <th>actions</th>
             </tr>
@@ -21,6 +22,7 @@
                 <td>{{ factura.id }}</td>
                 <td>{{ factura.cliente }}</td>
                 <td>{{ factura.estado }}</td>
+                <td>{{ totales[factura.id] }} €</td>
                 <td>{{ factura.fecha ? factura.fecha|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('app_factura_show', {'id': factura.id}) }}">show</a>
@@ -32,6 +34,7 @@
                 <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
 

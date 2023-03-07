@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Factura;
+use App\Entity\LineaFactura;
 use App\Form\FacturaType;
 use App\Repository\FacturaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,7 @@ class FacturaController extends AbstractController
     public function index(FacturaRepository $facturaRepository): Response
     {
         return $this->render('factura/index.html.twig', [
+            'totales' => $facturaRepository->getTotalFacturas(),
             'facturas' => $facturaRepository->findAll(),
         ]);
     }
@@ -29,7 +31,8 @@ class FacturaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $facturaRepository->save($factura, true);
+            $lineaFacutra = new LineaFactura();
+            $facturaRepository->save($factura, $lineaFacutra, true);
 
             return $this->redirectToRoute('app_factura_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -55,7 +58,8 @@ class FacturaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $facturaRepository->save($factura, true);
+            $lineaFacutra = new LineaFactura();
+            $facturaRepository->save($factura, $lineaFacutra, true);
 
             return $this->redirectToRoute('app_factura_index', [], Response::HTTP_SEE_OTHER);
         }
