@@ -9,7 +9,10 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Producto</th>
                 <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Factura</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -17,7 +20,10 @@
         {% for linea_factura in linea_facturas %}
             <tr>
                 <td>{{ linea_factura.id }}</td>
+                <td>{{ linea_factura.producto }}</td>
                 <td>{{ linea_factura.cantidad }}</td>
+                <td>{{ totales[linea_factura.id] }} €</td>
+                <td>{{ linea_factura.factura }}</td>
                 <td>
                     <a href="{{ path('app_linea_factura_show', {'id': linea_factura.id}) }}">show</a>
                     <a href="{{ path('app_linea_factura_edit', {'id': linea_factura.id}) }}">edit</a>

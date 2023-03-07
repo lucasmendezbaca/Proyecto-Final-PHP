@@ -15,6 +15,47 @@
                 <th>Fecha</th>
                 <td>{{ factura.fecha ? factura.fecha|date('Y-m-d') : '' }}</td>
             </tr>
+            <tr>
+                <th>Cliente</th>
+                <td>{{ factura.cliente }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ factura.estado }}</td>
+            </tr>
+            <tr>
+                <th>Importe</th>
+                <td>{{ total }} €</td>
+            </tr>
+            {#Lineas#}
+            <tr>
+                <th>Lineas:</th>
+                <td>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for linea in lineas %}
+                                <tr>
+                                    <td>{{ linea.id }}</td>
+                                    <td>{{ linea.producto }}</td>
+                                    <td>{{ linea.cantidad }}</td>
+                                    <td>
+                                        <a href="{{ path('app_linea_factura_show', {'id': linea.id}) }}">show</a>
+                                        <a href="{{ path('app_linea_factura_edit', {'id': linea.id}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
         </tbody>
     </table>
 

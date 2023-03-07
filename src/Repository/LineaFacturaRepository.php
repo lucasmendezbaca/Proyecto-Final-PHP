@@ -39,6 +39,27 @@ class LineaFacturaRepository extends ServiceEntityRepository
         }
     }
 
+    // obtener un array con todos los totales de las lineas de factura
+    public function getTotalLineasFacturas(): array
+    {
+        $totalLineasFactura = [];
+        $lineasFactura = $this->findAll();
+        foreach ($lineasFactura as $lineaFactura) {
+            $total = $lineaFactura->getTotal();
+            $totalLineasFactura[$lineaFactura->getId()] = $total;
+        }
+
+        return $totalLineasFactura;
+    }
+
+    // obtener el total de la linea de factura
+    public function getTotalLineaFactura(LineaFactura $lineaFactura): float
+    {
+        $total = $lineaFactura->getTotal();
+
+        return $total;
+    }
+
 //    /**
 //     * @return LineaFactura[] Returns an array of LineaFactura objects
 //     */

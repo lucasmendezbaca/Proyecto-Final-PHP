@@ -55,6 +55,26 @@ class FacturaRepository extends ServiceEntityRepository
         return $totalFacturas;
     }
 
+    public function getTotalFactura(Factura $factura): float
+    {
+        $total = 0;
+        foreach ($factura->getLineaFacturas() as $lineaFactura) {
+            $total += $lineaFactura->getTotal();
+        }
+
+        return $total;
+    }
+
+    public function getLineasFactura(Factura $factura): array
+    {
+        $lineasFactura = [];
+        foreach ($factura->getLineaFacturas() as $lineaFactura) {
+            $lineasFactura[] = $lineaFactura;
+        }
+
+        return $lineasFactura;
+    }
+
 //    /**
 //     * @return Factura[] Returns an array of Factura objects
 //     */

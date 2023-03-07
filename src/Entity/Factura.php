@@ -126,6 +126,6 @@ class Factura
 
     public function __toString()
     {
-        return $this->id . ' - ' . $this->getCliente();
+        return $this->id . ' - ' . $this->getCliente(). ' - ' . $this->getFecha()->format('d/m/Y');
     }
 }

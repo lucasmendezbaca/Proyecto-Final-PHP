@@ -17,6 +17,7 @@ class LineaFacturaController extends AbstractController
     public function index(LineaFacturaRepository $lineaFacturaRepository): Response
     {
         return $this->render('linea_factura/index.html.twig', [
+            'totales' => $lineaFacturaRepository->getTotalLineasFacturas(),
             'linea_facturas' => $lineaFacturaRepository->findAll(),
         ]);
     }
