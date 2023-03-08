@@ -6,6 +6,7 @@ use App\Entity\Factura;
 use App\Entity\LineaFactura;
 use App\Form\FacturaType;
 use App\Repository\FacturaRepository;
+use App\Repository\EstadoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class FacturaController extends AbstractController
 {
     #[Route('/', name: 'app_factura_index', methods: ['GET'])]
-    public function index(FacturaRepository $facturaRepository): Response
+    public function index(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository): Response
     {
         return $this->render('factura/index.html.twig', [
+            'estados' => $estadoRepository->findAll(),
             'totales' => $facturaRepository->getTotalFacturas(),
             'facturas' => $facturaRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/estado', name: 'app_factura_estado', methods: ['GET'])]
+    public function estado(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, Request $request): Response
+    {
+        $estado = $request->query->get('estado');
+
+        return $this->render('factura/index.html.twig', [
+            'estados' => $estadoRepository->findAll(),
+            'totales' => $facturaRepository->getTotalFacturas(),
+            'facturas' => $facturaRepository->getFacturasByEstado($estado),
         ]);
     }
 

@@ -5,6 +5,16 @@
 {% block body %}
     <h1>Factura index</h1>
 
+    <form action="{{ path('app_factura_estado') }}" method="get">
+        <select name="estado">
+            {% for estado in estados %}
+                <option value="{{ estado }}">{{ estado }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Filtrar">
+    </form>
+
+
     <table class="table">
         <thead>
             <tr>

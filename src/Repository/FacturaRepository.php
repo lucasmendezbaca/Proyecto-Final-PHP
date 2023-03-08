@@ -75,6 +75,21 @@ class FacturaRepository extends ServiceEntityRepository
         return $lineasFactura;
     }
 
+    public function getFacturasByEstado(string $estado): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT f
+            FROM App\Entity\Factura f
+            JOIN f.estado e
+            WHERE e.nombre = :estado'
+        )->setParameter('estado', $estado);
+
+        return $query->getResult();
+    }
+
+
 //    /**
 //     * @return Factura[] Returns an array of Factura objects
 //     */
