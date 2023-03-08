@@ -7,6 +7,7 @@ use App\Entity\LineaFactura;
 use App\Form\FacturaType;
 use App\Repository\FacturaRepository;
 use App\Repository\EstadoRepository;
+use App\Repository\ClienteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,37 +17,53 @@ use Symfony\Component\Routing\Annotation\Route;
 class FacturaController extends AbstractController
 {
     #[Route('/', name: 'app_factura_index', methods: ['GET'])]
-    public function index(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository): Response
+    public function index(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, ClienteRepository $clienteRepository): Response
     {
         return $this->render('factura/index.html.twig', [
             'estados' => $estadoRepository->findAll(),
+            'clientes' => $clienteRepository->findAll(),
             'totales' => $facturaRepository->getTotalFacturas(),
             'facturas' => $facturaRepository->findAll(),
         ]);
     }
 
     #[Route('/estado', name: 'app_factura_estado', methods: ['GET'])]
-    public function estado(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, Request $request): Response
+    public function estado(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, Request $request, ClienteRepository $clienteRepository): Response
     {
         $estado = $request->query->get('estado');
 
         return $this->render('factura/index.html.twig', [
             'estados' => $estadoRepository->findAll(),
+            'clientes' => $clienteRepository->findAll(),
             'totales' => $facturaRepository->getTotalFacturas(),
             'facturas' => $facturaRepository->getFacturasByEstado($estado),
         ]);
     }
 
     #[Route('/rango', name: 'app_factura_importe', methods: ['GET'])]
-    public function rango(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, Request $request): Response
+    public function rango(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, Request $request, ClienteRepository $clienteRepository): Response
     {
         $minimo = $request->query->get('minimo');
         $maximo = $request->query->get('maximo');
 
         return $this->render('factura/index.html.twig', [
             'estados' => $estadoRepository->findAll(),
+            'clientes' => $clienteRepository->findAll(),
             'totales' => $facturaRepository->getTotalFacturas(),
             'facturas' => $facturaRepository->getFacturasByImporte($minimo, $maximo),
+        ]);
+    }
+
+    #[Route('/cliente', name: 'app_factura_cliente', methods: ['GET'])]
+    public function cliente(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, Request $request, ClienteRepository $clienteRepository): Response
+    {
+        $cliente = $request->query->get('cliente');
+
+        return $this->render('factura/index.html.twig', [
+            'estados' => $estadoRepository->findAll(),
+            'clientes' => $clienteRepository->findAll(),
+            'totales' => $facturaRepository->getTotalFacturas(),
+            'facturas' => $facturaRepository->getFacturasByCliente($cliente),
         ]);
     }
 

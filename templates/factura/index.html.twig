@@ -20,6 +20,15 @@
         <input type="submit" value="Filtrar">
     </form>
 
+    <form action="{{ path('app_factura_cliente') }}" method="get">
+        <select name="cliente">
+            {% for cliente in clientes %}
+                <option value="{{ cliente }}">{{ cliente }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Filtrar">
+    </form>
+
     <table class="table">
         <thead>
             <tr>
