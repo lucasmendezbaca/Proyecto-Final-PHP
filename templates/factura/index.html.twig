@@ -14,6 +14,11 @@
         <input type="submit" value="Filtrar">
     </form>
 
+    <form action="{{ path('app_factura_importe') }}" method="get">
+        <input type="number" name="minimo" placeholder="Importe mínimo">
+        <input type="number" name="maximo" placeholder="Importe máximo">
+        <input type="submit" value="Filtrar">
+    </form>
 
     <table class="table">
         <thead>

@@ -89,6 +89,38 @@ class FacturaRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function getFacturasByCliente(string $cliente): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT f
+            FROM App\Entity\Factura f
+            JOIN f.cliente c
+            WHERE c.nombre = :cliente'
+        )->setParameter('cliente', $cliente);
+
+        return $query->getResult();
+    }
+
+    // filtrar las facturas para obtener las facturas que esten entre un importe minimo y maximo, el imoprte no esta en la tabla factura, sino que hay que sacarlo de multiplicando el precio de los productos de cada linea de factura por la cantidad de cada producto, las tablas factura y linea_factura estan relacionadas por el campo factura_id
+    public function getFacturasByImporte(float $importeMinimo, float $importeMaximo): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT f
+            FROM App\Entity\Factura f
+            JOIN f.lineaFacturas lf
+            JOIN lf.producto p
+            GROUP BY f.id
+            HAVING SUM(p.precio * lf.cantidad) BETWEEN :importeMinimo AND :importeMaximo'
+        )->setParameter('importeMinimo', $importeMinimo)
+        ->setParameter('importeMaximo', $importeMaximo);
+
+        return $query->getResult();
+    }
+
 
 //    /**
 //     * @return Factura[] Returns an array of Factura objects

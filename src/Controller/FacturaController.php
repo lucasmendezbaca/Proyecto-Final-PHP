@@ -37,6 +37,19 @@ class FacturaController extends AbstractController
         ]);
     }
 
+    #[Route('/rango', name: 'app_factura_importe', methods: ['GET'])]
+    public function rango(FacturaRepository $facturaRepository, EstadoRepository $estadoRepository, Request $request): Response
+    {
+        $minimo = $request->query->get('minimo');
+        $maximo = $request->query->get('maximo');
+
+        return $this->render('factura/index.html.twig', [
+            'estados' => $estadoRepository->findAll(),
+            'totales' => $facturaRepository->getTotalFacturas(),
+            'facturas' => $facturaRepository->getFacturasByImporte($minimo, $maximo),
+        ]);
+    }
+
     #[Route('/new', name: 'app_factura_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FacturaRepository $facturaRepository): Response
     {
