@@ -32,12 +32,42 @@ class ClienteRepository extends ServiceEntityRepository
 
     public function remove(Cliente $entity, bool $flush = false): void
     {
+        // $this->getEntityManager()->remove($entity);
+
+        // if ($flush) {
+        //     $this->getEntityManager()->flush();
+        // }
+
+        // cuando se elimina un cliente, se eliminan sus facturas
+        $facturas = $this->findFacturasByCliente($entity);
+        foreach ($facturas as $factura) {
+            $this->getEntityManager()->remove($factura);
+        }
+
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
+
+    // devolver un array de facturas de un cliente haciendo una consulta personalizada
+    public function findFacturasByCliente(Cliente $cliente): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT f
+            FROM App\Entity\Factura f
+            WHERE f.cliente = :cliente
+            ORDER BY f.id ASC'
+        )->setParameter('cliente', $cliente);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
+
 
 //    /**
 //     * @return Cliente[] Returns an array of Cliente objects

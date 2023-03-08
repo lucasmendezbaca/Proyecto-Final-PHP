@@ -33,6 +33,12 @@ class FacturaRepository extends ServiceEntityRepository
 
     public function remove(Factura $entity, bool $flush = false): void
     {
+        // eliminar las lineas de la factura
+        $lineas = $this->getLineasFacturaByFactura($entity);
+        foreach ($lineas as $linea) {
+            $this->getEntityManager()->remove($linea);
+        }
+
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -119,6 +125,22 @@ class FacturaRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    // obtener un array con las lineas de factura de una factura haciendo una consulta personalizada
+    public function getLineasFacturaByFactura(Factura $factura): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT lf
+            FROM App\Entity\LineaFactura lf
+            JOIN lf.factura f
+            WHERE f.id = :id'
+        )->setParameter('id', $factura->getId());
+
+        return $query->getResult();
+    }
+
 
 
 //    /**
